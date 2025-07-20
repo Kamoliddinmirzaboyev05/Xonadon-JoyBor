@@ -73,7 +73,7 @@ const ApplicationStatus: React.FC<ApplicationStatusProps> = ({ applications, onV
       <div className="bg-white rounded-xl shadow-md p-6">
         <h2 className="text-xl font-bold text-gray-900 mb-6">{t('nav.applications')}</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-6 gap-4 mb-6">
           {/* Stats */}
           <div className="bg-yellow-50 p-4 rounded-lg">
             <div className="text-2xl font-bold text-yellow-600">
@@ -103,7 +103,7 @@ const ApplicationStatus: React.FC<ApplicationStatusProps> = ({ applications, onV
       </div>
 
       {/* Application Cards */}
-      <div className="space-y-4">
+      <div className="space-y-8">
         {applications.map((application) => {
           const property = application.property;
           const title = language === 'uz' ? property.title : property.titleRu;

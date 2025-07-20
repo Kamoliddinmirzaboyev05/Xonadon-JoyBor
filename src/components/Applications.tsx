@@ -92,44 +92,44 @@ const Applications: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="p-4 lg:p-6">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('applications.title')}</h1>
-        <p className="text-gray-600">{applications.length} ta ariza</p>
+      <div className="mb-6">
+        <h1 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">{t('applications.title')}</h1>
+        <p className="text-sm text-gray-600 dark:text-gray-400">{applications.length} ta ariza</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-        <div className={`bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-500`}>
-          <div className="text-2xl font-bold text-blue-600">{statusCounts.all}</div>
-          <div className="text-sm text-gray-600">Jami arizalar</div>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+        <div className={`bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm border-l-4 border-blue-500`}>
+          <div className="text-lg font-bold text-blue-600 dark:text-blue-400">{statusCounts.all}</div>
+          <div className="text-xs text-gray-600 dark:text-gray-400">Jami arizalar</div>
         </div>
-        <div className={`bg-white p-4 rounded-lg shadow-md border-l-4 border-yellow-500`}>
-          <div className="text-2xl font-bold text-yellow-600">{statusCounts.pending}</div>
-          <div className="text-sm text-gray-600">{t('applications.pending')}</div>
+        <div className={`bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm border-l-4 border-yellow-500`}>
+          <div className="text-lg font-bold text-yellow-600 dark:text-yellow-400">{statusCounts.pending}</div>
+          <div className="text-xs text-gray-600 dark:text-gray-400">{t('applications.pending')}</div>
         </div>
-        <div className={`bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500`}>
-          <div className="text-2xl font-bold text-green-600">{statusCounts.accepted}</div>
-          <div className="text-sm text-gray-600">{t('applications.accepted')}</div>
+        <div className={`bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm border-l-4 border-green-500`}>
+          <div className="text-lg font-bold text-green-600 dark:text-green-400">{statusCounts.accepted}</div>
+          <div className="text-xs text-gray-600 dark:text-gray-400">{t('applications.accepted')}</div>
         </div>
-        <div className={`bg-white p-4 rounded-lg shadow-md border-l-4 border-red-500`}>
-          <div className="text-2xl font-bold text-red-600">{statusCounts.rejected}</div>
-          <div className="text-sm text-gray-600">{t('applications.rejected')}</div>
+        <div className={`bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm border-l-4 border-red-500`}>
+          <div className="text-lg font-bold text-red-600 dark:text-red-400">{statusCounts.rejected}</div>
+          <div className="text-xs text-gray-600 dark:text-gray-400">{t('applications.rejected')}</div>
         </div>
-        <div className={`bg-white p-4 rounded-lg shadow-md border-l-4 border-gray-500`}>
-          <div className="text-2xl font-bold text-gray-600">{statusCounts.expired}</div>
-          <div className="text-sm text-gray-600">{t('applications.expired')}</div>
+        <div className={`bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm border-l-4 border-gray-500`}>
+          <div className="text-lg font-bold text-gray-600 dark:text-gray-400">{statusCounts.expired}</div>
+          <div className="text-xs text-gray-600 dark:text-gray-400">{t('applications.expired')}</div>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl shadow-md p-6 mb-8">
-        <div className="flex flex-col md:flex-row gap-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 mb-6">
+        <div className="flex flex-col md:flex-row gap-3">
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="all">Barcha arizalar</option>
             <option value="pending">{t('applications.pending')}</option>
@@ -141,21 +141,21 @@ const Applications: React.FC = () => {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="newest">Eng yangi</option>
             <option value="oldest">Eng eski</option>
           </select>
 
-          <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
-            <Filter size={16} />
+          <button className="flex items-center gap-2 px-3 py-2 text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+            <Filter size={14} />
             Qo'shimcha filtrlar
           </button>
         </div>
       </div>
 
       {/* Applications List */}
-      <div className="space-y-6">
+      <div className="space-y-8">
         {sortedApplications.map((application) => {
           const propertyTitle = language === 'uz' ? application.property.title : application.property.titleRu;
           const propertyLocation = language === 'uz' ? application.property.location : application.property.locationRu;

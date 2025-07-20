@@ -12,6 +12,16 @@ const translations = {
   uz: {
     // Header & Navigation
     'site.title': 'Xonadon.uz - Uy egalar uchun',
+    
+    // Property Card
+    'room.single': '1 kishilik',
+    'room.shared': '2 kishilik', 
+    'room.family': 'Oilaviy',
+    'property.reviews': 'sharh',
+    'property.distance': 'universitetgacha',
+    'property.month': 'oy',
+    'property.view.details': 'Batafsil',
+    'property.apply.now': 'Ariza berish',
     'nav.dashboard': 'Boshqaruv paneli',
     'nav.properties': 'Xonadonlar',
     'nav.applications': 'Arizalar',
@@ -143,6 +153,16 @@ const translations = {
   ru: {
     // Header & Navigation
     'site.title': 'Xonadon.uz - Для арендодателей',
+    
+    // Property Card
+    'room.single': 'Одноместная',
+    'room.shared': 'Двухместная',
+    'room.family': 'Семейная',
+    'property.reviews': 'отзывов',
+    'property.distance': 'до университета',
+    'property.month': 'месяц',
+    'property.view.details': 'Подробнее',
+    'property.apply.now': 'Подать заявку',
     'nav.dashboard': 'Панель управления',
     'nav.properties': 'Недвижимость',
     'nav.applications': 'Заявки',
