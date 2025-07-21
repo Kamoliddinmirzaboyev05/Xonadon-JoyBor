@@ -15,6 +15,7 @@ import {
 import { useLanguage } from '../contexts/LanguageContext';
 import { mockProperties } from '../data/mockData';
 import { Property } from '../types';
+import { Helmet } from 'react-helmet-async';
 
 interface PropertiesProps {
   onAddProperty: () => void;
@@ -253,117 +254,124 @@ const Properties: React.FC<PropertiesProps> = ({ onAddProperty, onEditProperty }
   };
 
   return (
-    <div className="p-4 lg:p-6">
-      {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
-        <div>
-          <h1 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-            Mening xonadonlarim
-          </h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            {properties.length} ta xonadon, {properties.filter(p => p.status === 'active').length} ta faol
-          </p>
-        </div>
-        <button
-          onClick={onAddProperty}
-          className="mt-4 lg:mt-0 flex items-center gap-2 bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-sm"
-        >
-          <Plus size={16} />
-          Yangi xonadon qo'shish
-        </button>
-      </div>
-
-      {/* Filters */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 mb-6">
-        <div className="flex flex-col lg:flex-row gap-3">
-          <div className="flex-1">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={16} />
-              <input
-                type="text"
-                placeholder="Xonadon qidirish..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+    <main>
+      <Helmet>
+        <title>Xonadonlar | Joy Bor</title>
+        <meta name="description" content="Mening xonadonlarimni boshqarish va yangi xonadon qo‘shish." />
+        <link rel="canonical" href="https://xonadon.joyboronline.uz/properties" />
+      </Helmet>
+      <div className="p-4 lg:p-6">
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+          <div>
+            <h1 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+              Mening xonadonlarim
+            </h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {properties.length} ta xonadon, {properties.filter(p => p.status === 'active').length} ta faol
+            </p>
           </div>
-          
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <option value="all">Barcha holat</option>
-            <option value="active">Faol</option>
-            <option value="inactive">Nofaol</option>
-            <option value="pending">Kutilmoqda</option>
-          </select>
-          
-          <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
-            <button
-              onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-md transition-colors ${
-                viewMode === 'grid' ? 'bg-white dark:bg-gray-600 shadow-sm' : 'text-gray-600 dark:text-gray-400'
-              }`}
-            >
-              <div className="w-3 h-3 grid grid-cols-2 gap-0.5">
-                <div className="bg-current rounded-sm"></div>
-                <div className="bg-current rounded-sm"></div>
-                <div className="bg-current rounded-sm"></div>
-                <div className="bg-current rounded-sm"></div>
-              </div>
-            </button>
-            <button
-              onClick={() => setViewMode('list')}
-              className={`p-2 rounded-md transition-colors ${
-                viewMode === 'list' ? 'bg-white dark:bg-gray-600 shadow-sm' : 'text-gray-600 dark:text-gray-400'
-              }`}
-            >
-              <div className="w-3 h-3 flex flex-col gap-0.5">
-                <div className="bg-current h-0.5 rounded-sm"></div>
-                <div className="bg-current h-0.5 rounded-sm"></div>
-                <div className="bg-current h-0.5 rounded-sm"></div>
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Properties */}
-      {filteredProperties.length === 0 ? (
-        <div className="text-center py-12">
-          <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Home className="w-8 h-8 text-gray-400 dark:text-gray-500" />
-          </div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Xonadon topilmadi</h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
-            {searchTerm ? 'Qidiruv bo\'yicha natija topilmadi' : 'Hali xonadon qo\'shilmagan'}
-          </p>
           <button
             onClick={onAddProperty}
-            className="flex items-center gap-2 bg-blue-600 dark:bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors mx-auto"
+            className="mt-4 lg:mt-0 flex items-center gap-2 bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-sm"
           >
-            <Plus size={20} />
-            Birinchi xonadonni qo'shish
+            <Plus size={16} />
+            Yangi xonadon qo'shish
           </button>
         </div>
-      ) : (
-        <div className={
-          viewMode === 'grid' 
-            ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'
-            : 'space-y-3'
-        }>
-          {filteredProperties.map((property) => (
-            viewMode === 'grid' ? (
-              <PropertyCard key={property.id} property={property} />
-            ) : (
-              <PropertyListItem key={property.id} property={property} />
-            )
-          ))}
+
+        {/* Filters */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 mb-6">
+          <div className="flex flex-col lg:flex-row gap-3">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={16} />
+                <input
+                  type="text"
+                  placeholder="Xonadon qidirish..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+            
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="all">Barcha holat</option>
+              <option value="active">Faol</option>
+              <option value="inactive">Nofaol</option>
+              <option value="pending">Kutilmoqda</option>
+            </select>
+            
+            <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`p-2 rounded-md transition-colors ${
+                  viewMode === 'grid' ? 'bg-white dark:bg-gray-600 shadow-sm' : 'text-gray-600 dark:text-gray-400'
+                }`}
+              >
+                <div className="w-3 h-3 grid grid-cols-2 gap-0.5">
+                  <div className="bg-current rounded-sm"></div>
+                  <div className="bg-current rounded-sm"></div>
+                  <div className="bg-current rounded-sm"></div>
+                  <div className="bg-current rounded-sm"></div>
+                </div>
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`p-2 rounded-md transition-colors ${
+                  viewMode === 'list' ? 'bg-white dark:bg-gray-600 shadow-sm' : 'text-gray-600 dark:text-gray-400'
+                }`}
+              >
+                <div className="w-3 h-3 flex flex-col gap-0.5">
+                  <div className="bg-current h-0.5 rounded-sm"></div>
+                  <div className="bg-current h-0.5 rounded-sm"></div>
+                  <div className="bg-current h-0.5 rounded-sm"></div>
+                </div>
+              </button>
+            </div>
+          </div>
         </div>
-      )}
-    </div>
+
+        {/* Properties */}
+        {filteredProperties.length === 0 ? (
+          <div className="text-center py-12">
+            <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Home className="w-8 h-8 text-gray-400 dark:text-gray-500" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Xonadon topilmadi</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              {searchTerm ? 'Qidiruv bo\'yicha natija topilmadi' : 'Hali xonadon qo\'shilmagan'}
+            </p>
+            <button
+              onClick={onAddProperty}
+              className="flex items-center gap-2 bg-blue-600 dark:bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors mx-auto"
+            >
+              <Plus size={20} />
+              Birinchi xonadonni qo'shish
+            </button>
+          </div>
+        ) : (
+          <div className={
+            viewMode === 'grid' 
+              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'
+              : 'space-y-3'
+          }>
+            {filteredProperties.map((property) => (
+              viewMode === 'grid' ? (
+                <PropertyCard key={property.id} property={property} />
+              ) : (
+                <PropertyListItem key={property.id} property={property} />
+              )
+            ))}
+          </div>
+        )}
+      </div>
+    </main>
   );
 };
 

@@ -14,6 +14,7 @@ import LoginModal from './components/LoginModal';
 import { useAuth } from './contexts/AuthContext';
 import { Property } from './types';
 import { Home, Building, FileText, BarChart3, User } from 'lucide-react';
+import Footer from './components/Footer';
 
 type AppView = 'dashboard' | 'properties' | 'applications' | 'analytics' | 'profile';
 
@@ -190,7 +191,7 @@ const AppContent: React.FC = () => {
           onViewChange={handleViewChange}
           onAddProperty={handleAddProperty}
         />
-        <div className="pb-24 pb-safe">
+        <div className="pb-20 pb-safe">
           {renderCurrentView()}
         </div>
       </div>
@@ -222,6 +223,7 @@ function App() {
       <LanguageProvider>
         <AuthProvider>
           <AppContent />
+          <Footer />
         </AuthProvider>
       </LanguageProvider>
     </ThemeProvider>
