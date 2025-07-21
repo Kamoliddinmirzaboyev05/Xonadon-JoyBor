@@ -68,13 +68,13 @@ const Navbar: React.FC<NavbarProps> = () => {
             {/* Logo */}
             <div className="flex items-center gap-3">
               <img 
-                src="/logo.svg" 
+                src="/logo.png" 
                 alt="Xonadon.uz" 
                 className="w-8 h-8"
               />
               <div className="hidden sm:block">
                 <h1 className="text-lg font-bold text-blue-600 dark:text-blue-400">
-                  Xonadon.uz
+                  Joy Bor
                 </h1>
                 <p className="text-xs text-gray-500 dark:text-gray-400 -mt-1">
                   Uy egalar paneli

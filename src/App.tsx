@@ -176,7 +176,7 @@ const AppContent: React.FC = () => {
         </div>
         
         {/* Main Content */}
-        <div className={`flex-1 ml-72 ${user ? 'pt-16' : ''}`}>
+        <div className="flex-1 ml-72">
           <div className="min-h-screen">
             {renderCurrentView()}
           </div>
@@ -190,7 +190,7 @@ const AppContent: React.FC = () => {
           onViewChange={handleViewChange}
           onAddProperty={handleAddProperty}
         />
-        <div className={user ? 'pt-16' : ''}>
+        <div className="pb-24 pb-safe">
           {renderCurrentView()}
         </div>
       </div>
