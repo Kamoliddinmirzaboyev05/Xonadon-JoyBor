@@ -63,12 +63,12 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                 >
                   <div className="relative">
                     <Icon 
-                      size={18} 
+                      size={20} 
                       strokeWidth={isActive ? 2.5 : 2} 
                       className={`transition-all duration-200 ${isActive ? 'scale-110' : ''}`}
                     />
                   </div>
-                  <span className={`text-[10px] mt-1 font-medium leading-none transition-all duration-200 ${
+                  <span className={`text-xs mt-1 font-medium leading-none transition-all duration-200 ${
                     isActive ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400'
                   }`}>
                     {item.label}
@@ -81,10 +81,10 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
           <div className="absolute left-1/2 -translate-x-1/2 bottom-4 flex justify-center items-center z-10">
             <button
               onClick={handleAddClick}
-              className="flex flex-col items-center justify-center w-16 h-16 bg-blue-600 dark:bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-200 transform hover:scale-105 active:scale-95 border-4 border-white dark:border-gray-800"
+              className="flex flex-col items-center justify-center w-14 h-14 lg:w-16 lg:h-16 bg-blue-600 dark:bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-200 transform hover:scale-105 active:scale-95 border-4 border-white dark:border-gray-800"
               style={{ marginBottom: '0.5rem' }}
             >
-              <Plus size={28} strokeWidth={2.5} />
+              <Plus size={24} strokeWidth={2.5} className="lg:w-7 lg:h-7" />
             </button>
           </div>
           {/* Right nav items */}
@@ -104,17 +104,17 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
                 >
                   <div className="relative">
                     <Icon 
-                      size={18} 
+                      size={20} 
                       strokeWidth={isActive ? 2.5 : 2} 
                       className={`transition-all duration-200 ${isActive ? 'scale-110' : ''}`}
                     />
                     {item.badge && (
-                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium text-[10px]">
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium">
                         {item.badge}
                       </span>
                     )}
                   </div>
-                  <span className={`text-[10px] mt-1 font-medium leading-none transition-all duration-200 ${
+                  <span className={`text-xs mt-1 font-medium leading-none transition-all duration-200 ${
                     isActive ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400'
                   }`}>
                     {item.label}

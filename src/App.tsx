@@ -126,12 +126,12 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors flex flex-col">
       {/* Navbar - Always visible when logged in */}
       {user && <Navbar />}
 
       {/* Desktop Layout */}
-      <div className="hidden lg:flex">
+      <div className="hidden lg:flex flex-1">
         {/* Sidebar */}
         <div className={`w-72 bg-white dark:bg-gray-800 shadow-sm border-r border-gray-200 dark:border-gray-700 min-h-screen fixed left-0 ${user ? 'top-16' : 'top-0'} transition-all duration-300`}>
           <div className="p-5">
@@ -190,20 +190,20 @@ const AppContent: React.FC = () => {
         
         {/* Main Content */}
         <div className="flex-1 ml-72">
-          <div className="min-h-screen">
+          <div className="flex-1">
             {renderCurrentView()}
           </div>
         </div>
       </div>
       
       {/* Mobile & Tablet Layout */}
-      <div className="lg:hidden">
+      <div className="lg:hidden flex-1 flex flex-col">
         <BottomNavigation 
           currentView={currentView} 
           onViewChange={handleViewChange}
           onAddListing={handleAddListing}
         />
-        <div className="pb-20 pb-safe">
+        <div className="flex-1 pb-20 pb-safe">
           {renderCurrentView()}
         </div>
       </div>
@@ -225,6 +225,9 @@ const AppContent: React.FC = () => {
           onSave={handleSaveListing}
         />
       )}
+      
+      {/* Footer - only show when logged in */}
+      {user && <Footer />}
     </div>
   );
 };
@@ -235,7 +238,6 @@ function App() {
       <LanguageProvider>
         <AuthProvider>
           <AppContent />
-          <Footer />
         </AuthProvider>
       </LanguageProvider>
     </ThemeProvider>
