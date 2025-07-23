@@ -4,51 +4,71 @@ import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import BottomNavigation from './components/BottomNavigation';
 import Navbar from './components/Navbar';
-import Dashboard from './components/Dashboard';
-import Properties from './components/Properties';
-import Applications from './components/Applications';
-import Analytics from './components/Analytics';
+import Home from './components/Home';
+import MyListings from './components/MyListings';
+import Chat from './components/Chat';
 import Profile from './components/Profile';
-import PropertyForm from './components/PropertyForm';
+import ListingForm from './components/ListingForm';
+import ListingDetails from './components/ListingDetails';
 import LoginModal from './components/LoginModal';
 import { useAuth } from './contexts/AuthContext';
 import { Property } from './types';
-import { Home, Building, FileText, BarChart3, User } from 'lucide-react';
+import { Home as HomeIcon, MessageCircle, Plus, User, List } from 'lucide-react';
 import Footer from './components/Footer';
 
-type AppView = 'dashboard' | 'properties' | 'applications' | 'analytics' | 'profile';
+type AppView = 'home' | 'listings' | 'chat' | 'profile';
 
 const AppContent: React.FC = () => {
   const { user } = useAuth();
-  const [currentView, setCurrentView] = useState<AppView>('dashboard');
+  const [currentView, setCurrentView] = useState<AppView>('home');
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showPropertyForm, setShowPropertyForm] = useState(false);
-  const [editingProperty, setEditingProperty] = useState<Property | null>(null);
+  const [showListingForm, setShowListingForm] = useState(false);
+  const [selectedListing, setSelectedListing] = useState<Property | null>(null);
+  const [editingListing, setEditingListing] = useState<Property | null>(null);
 
   const handleViewChange = (view: string) => {
     setCurrentView(view as AppView);
-    setShowPropertyForm(false);
-    setEditingProperty(null);
+    setShowListingForm(false);
+    setEditingListing(null);
+    setSelectedListing(null);
   };
 
   const handleLoginClick = () => {
     setShowLoginModal(true);
   };
 
-  const handleAddProperty = () => {
-    setEditingProperty(null);
-    setShowPropertyForm(true);
+  const handleAddListing = () => {
+    if (!user) {
+      setShowLoginModal(true);
+      return;
+    }
+    setEditingListing(null);
+    setShowListingForm(true);
   };
 
-  const handleEditProperty = (property: Property) => {
-    setEditingProperty(property);
-    setShowPropertyForm(true);
+  const handleEditListing = (listing: Property) => {
+    setEditingListing(listing);
+    setShowListingForm(true);
   };
 
-  const handleSaveProperty = (propertyData: any) => {
-    console.log('Saving property:', propertyData);
-    setShowPropertyForm(false);
-    setEditingProperty(null);
+  const handleSaveListing = (listingData: any) => {
+    console.log('Saving listing:', listingData);
+    setShowListingForm(false);
+    setEditingListing(null);
+  };
+
+  const handleViewListing = (listing: Property) => {
+    setSelectedListing(listing);
+  };
+
+  const handleContactSeller = (listing: Property) => {
+    if (!user) {
+      setShowLoginModal(true);
+      return;
+    }
+    // Navigate to chat with this listing's owner
+    setCurrentView('chat');
+    // TODO: Initialize chat with the listing owner
   };
 
   const renderCurrentView = () => {
@@ -58,16 +78,13 @@ const AppContent: React.FC = () => {
           <div className="max-w-md w-full mx-4">
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center">
               <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z" />
-                </svg>
+                <HomeIcon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                Xonadon.uz
+                Joy Bor
               </h1>
               <p className="text-gray-600 dark:text-gray-400 mb-8">
-                Uy egalar uchun boshqaruv paneli
+                Ijara uchun xonadonlar platformasi
               </p>
               <button
                 onClick={handleLoginClick}
@@ -76,7 +93,7 @@ const AppContent: React.FC = () => {
                 Kirish
               </button>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
-                Xonadonlaringizni boshqaring va arizalarni ko'ring
+                E'lon berish va xabar almashuv uchun
               </p>
             </div>
           </div>
@@ -84,28 +101,34 @@ const AppContent: React.FC = () => {
       );
     }
 
+    if (selectedListing) {
+      return (
+        <ListingDetails
+          listing={selectedListing}
+          onClose={() => setSelectedListing(null)}
+          onContact={handleContactSeller}
+        />
+      );
+    }
+
     switch (currentView) {
-      case 'dashboard':
-        return <Dashboard onAddProperty={handleAddProperty} onEditProperty={handleEditProperty} />;
-      case 'properties':
-        return <Properties onAddProperty={handleAddProperty} onEditProperty={handleEditProperty} />;
-      case 'applications':
-        return <Applications />;
-      case 'analytics':
-        return <Analytics />;
+      case 'home':
+        return <Home onViewListing={handleViewListing} onContact={handleContactSeller} />;
+      case 'listings':
+        return <MyListings onAddListing={handleAddListing} onEditListing={handleEditListing} />;
+      case 'chat':
+        return <Chat />;
       case 'profile':
         return <Profile />;
       default:
-        return <Dashboard onAddProperty={handleAddProperty} onEditProperty={handleEditProperty} />;
+        return <Home onViewListing={handleViewListing} onContact={handleContactSeller} />;
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       {/* Navbar - Always visible when logged in */}
-      {user && (
-        <Navbar />
-      )}
+      {user && <Navbar />}
 
       {/* Desktop Layout */}
       <div className="hidden lg:flex">
@@ -115,51 +138,40 @@ const AppContent: React.FC = () => {
             {/* Navigation */}
             <div className="space-y-1">
               <button
-                onClick={() => handleViewChange('dashboard')}
+                onClick={() => handleViewChange('home')}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors text-sm ${
-                  currentView === 'dashboard' 
+                  currentView === 'home' 
                     ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800' 
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                 }`}
               >
-                <Home size={16} />
-                Boshqaruv paneli
+                <HomeIcon size={16} />
+                Asosiy sahifa
               </button>
               <button
-                onClick={() => handleViewChange('properties')}
+                onClick={() => handleViewChange('listings')}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors text-sm ${
-                  currentView === 'properties' 
+                  currentView === 'listings' 
                     ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800' 
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                 }`}
               >
-                <Building size={16} />
-                Mening xonadonlarim
+                <List size={16} />
+                E'lonlarim
               </button>
               <button
-                onClick={() => handleViewChange('applications')}
+                onClick={() => handleViewChange('chat')}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors text-sm ${
-                  currentView === 'applications' 
+                  currentView === 'chat' 
                     ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800' 
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                 }`}
               >
-                <FileText size={16} />
-                Arizalar
+                <MessageCircle size={16} />
+                Xabarlar
                 <span className="ml-auto bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full min-w-[16px] text-center">
-                  5
+                  3
                 </span>
-              </button>
-              <button
-                onClick={() => handleViewChange('analytics')}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors text-sm ${
-                  currentView === 'analytics' 
-                    ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800' 
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }`}
-              >
-                <BarChart3 size={16} />
-                Statistika
               </button>
               <button
                 onClick={() => handleViewChange('profile')}
@@ -189,7 +201,7 @@ const AppContent: React.FC = () => {
         <BottomNavigation 
           currentView={currentView} 
           onViewChange={handleViewChange}
-          onAddProperty={handleAddProperty}
+          onAddListing={handleAddListing}
         />
         <div className="pb-20 pb-safe">
           {renderCurrentView()}
@@ -202,15 +214,15 @@ const AppContent: React.FC = () => {
         onClose={() => setShowLoginModal(false)}
       />
       
-      {showPropertyForm && (
-        <PropertyForm
-          property={editingProperty || undefined}
-          isOpen={showPropertyForm}
+      {showListingForm && (
+        <ListingForm
+          listing={editingListing || undefined}
+          isOpen={showListingForm}
           onClose={() => {
-            setShowPropertyForm(false);
-            setEditingProperty(null);
+            setShowListingForm(false);
+            setEditingListing(null);
           }}
-          onSave={handleSaveProperty}
+          onSave={handleSaveListing}
         />
       )}
     </div>

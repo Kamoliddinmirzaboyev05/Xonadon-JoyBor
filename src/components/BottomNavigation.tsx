@@ -1,24 +1,24 @@
 import React from 'react';
-import { Home, Building, FileText, BarChart3, User, Plus } from 'lucide-react';
+import { Home, List, MessageCircle, User, Plus } from 'lucide-react';
 
 interface BottomNavigationProps {
   currentView: string;
   onViewChange: (view: string) => void;
-  onAddProperty?: () => void;
+  onAddListing?: () => void;
 }
 
 const navItems = [
-  { key: 'dashboard', label: 'Boshqaruv', icon: Home },
-  { key: 'properties', label: 'Xonadonlar', icon: Building },
+  { key: 'home', label: 'Asosiy', icon: Home },
+  { key: 'listings', label: 'E\'lonlarim', icon: List },
   { key: 'add', label: 'Qo\'shish', icon: Plus, isSpecial: true },
-  { key: 'applications', label: 'Arizalar', icon: FileText, badge: 5 },
+  { key: 'chat', label: 'Xabarlar', icon: MessageCircle, badge: 3 },
   { key: 'profile', label: 'Profil', icon: User },
 ];
 
 const BottomNavigation: React.FC<BottomNavigationProps> = ({ 
   currentView, 
   onViewChange, 
-  onAddProperty 
+  onAddListing 
 }) => {
   const handleAddClick = () => {
     // Haptic feedback for mobile devices
@@ -26,11 +26,11 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
       navigator.vibrate(50);
     }
     
-    if (onAddProperty) {
-      onAddProperty();
+    if (onAddListing) {
+      onAddListing();
     } else {
-      // Fallback: properties sahifasiga o'tish
-      onViewChange('properties');
+      // Fallback: listings sahifasiga o'tish
+      onViewChange('listings');
     }
   };
 
