@@ -14,7 +14,6 @@ import LoginModal from './components/LoginModal';
 import { useAuth } from './contexts/AuthContext';
 import { Property } from './types';
 import { Home as HomeIcon, MessageCircle, Plus, User, List } from 'lucide-react';
-import Footer from './components/Footer';
 
 type AppView = 'home' | 'listings' | 'chat' | 'profile';
 
@@ -225,9 +224,6 @@ const AppContent: React.FC = () => {
           onSave={handleSaveListing}
         />
       )}
-      
-      {/* Footer - only show when logged in */}
-      {user && <Footer />}
     </div>
   );
 };
